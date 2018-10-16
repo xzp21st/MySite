@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['*',]
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +40,63 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'django_summernote',
 ]
+
+# 主题
+JET_THEMES = [
+    {
+        'theme': 'default',  # theme folder name
+        'color': '#47bac1',  # color of the theme's button in user menu
+        'title': 'Default'   # theme title
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title': 'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title': 'Light Green'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#a464c4',
+        'title': 'Light Violet'
+    },
+    {
+        'theme': 'light-blue',
+        'color': '#5EADDE',
+        'title': 'Light Blue'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#222',
+        'title': 'Light Gray'
+    }
+]
+
+# 富文本编辑器设置
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode
+    'iframe': True,  # or set False to use SummernoteInplaceWidget - no iframe mode
+
+    # Using Summernote Air-mode
+    'airMode': False,
+
+    # Use native HTML tags (`<b>`, `<i>`, ...) instead of style attributes
+    'styleWithSpan': False,
+
+    # Change editor size
+    'width': '80%',
+    'height': '480',
+
+    # Use proper language setting automatically (default)
+    'lang': 'zh-CN',
+
+
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,8 +134,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mysite',                                # 数据库名称
+        'USER': 'test',                                  # 数据库用户名
+        'PASSWORD': 'test',                              # 数据库密码
+        'HOST': '',                                      # 数据库主机，留空默认为localhost
+        'PORT': '3306',                                  # 数据库端口
     }
 }
 
@@ -106,13 +168,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+PAGE_NUM = 3  # 每页显示3篇文章
 
 
 # Static files (CSS, JavaScript, Images)
@@ -121,3 +185,28 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# 是否展开所有菜单
+JET_SIDE_MENU_COMPACT = True  # 菜单不是很多时建议为TRUE
+
+JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
+    {'label': '内容管理', 'app_label': 'blog', 'items': [
+        {'name': 'article'},
+        {'name': 'tag'},
+        {'name': 'category'},
+    ]},
+
+    {'label': '附件管理', 'app_label': 'django_summernote', 'items': [
+        {'label': '附件列表', 'name': 'attachment'},
+
+    ]},
+
+    {'label': '权限管理', 'items': [
+        {'name': 'auth.user', 'permissions': ['auth.user']},
+        {'name': 'auth.group', 'permissions': ['auth.user']},
+
+    ]},
+]

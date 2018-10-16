@@ -15,7 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from blog import views
+
+from django.conf.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name='home'),   # 主页
+    path('home/', views.home, name='home'),  # 主页
+    path('articles/<int:id>/', views.detail, name='detail'),  # 文章详情
+    path('category/<int:id>/', views.search_category, name='category_menu'),  # 分类搜索
+    path('tag/<str:tag>/', views.search_tag, name='search_tag'),  # 标签搜索
+    path('archives/<str:year>/<str:month>', views.archives, name='archives'),  # 按月归档
+    path('summernote/', include('django_summernote.urls')),
+    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
