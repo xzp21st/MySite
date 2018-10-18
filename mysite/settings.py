@@ -174,9 +174,9 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
-PAGE_NUM = 3  # 每页显示3篇文章
+PAGE_NUM = 10  # 每页显示3篇文章
 
 
 # Static files (CSS, JavaScript, Images)

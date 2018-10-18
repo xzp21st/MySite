@@ -22,6 +22,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),   # 主页
     path('home/', views.home, name='home'),  # 主页
@@ -30,8 +32,6 @@ urlpatterns = [
     path('tag/<str:tag>/', views.search_tag, name='search_tag'),  # 标签搜索
     path('archives/<str:year>/<str:month>', views.archives, name='archives'),  # 按月归档
     path('summernote/', include('django_summernote.urls')),
-    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
 ]
 
 if settings.DEBUG:
