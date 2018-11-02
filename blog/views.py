@@ -101,3 +101,4 @@ def archives(request, year, month):
         'year_month': year+'年'+month+'月'
         }
     )
+
