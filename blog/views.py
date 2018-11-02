@@ -65,6 +65,7 @@ def search_category(request, id):
     )
 
 
+// test
 def search_tag(request, tag):
     posts = Article.objects.filter(tags__name__contains=tag)
     paginator = Paginator(posts, settings.PAGE_NUM)  # 每页显示数量
